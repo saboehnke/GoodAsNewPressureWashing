@@ -394,6 +394,63 @@
     .footer-links a { font-family: 'Barlow Condensed', sans-serif; font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; color: rgba(245,242,236,0.4); transition: color 0.2s; }
     .footer-links a:hover { color: var(--accent); }
 
+    /* ── HAMBURGER ── */
+    .hamburger {
+      display: none;
+      flex-direction: column; justify-content: center; align-items: center;
+      gap: 5px;
+      width: 40px; height: 40px;
+      background: none; border: none; cursor: pointer;
+      padding: 4px; z-index: 200;
+    }
+    .hamburger span {
+      display: block; width: 24px; height: 1.5px;
+      background: var(--black);
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      transform-origin: center;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    /* ── MOBILE MENU ── */
+    .mobile-menu {
+      display: none;
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      z-index: 99;
+      background: var(--off-white);
+      flex-direction: column; justify-content: center; align-items: center;
+      padding: 6rem 2rem 3rem;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+    .mobile-menu.open { opacity: 1; pointer-events: all; }
+    .mobile-nav-links {
+      list-style: none;
+      display: flex; flex-direction: column; align-items: center;
+      width: 100%;
+      border-top: 1px solid var(--light-line);
+    }
+    .mobile-nav-links li { width: 100%; border-bottom: 1px solid var(--light-line); }
+    .mobile-nav-links a {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem; font-weight: 300; letter-spacing: 0.02em;
+      text-decoration: none; color: var(--black);
+      padding: 1.1rem 0; text-align: center;
+      transition: color 0.2s;
+    }
+    .mobile-nav-links a:hover { color: var(--accent); }
+    .mobile-nav-cta {
+      margin-top: 2.5rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase;
+      text-decoration: none; color: var(--off-white);
+      background: var(--black); padding: 0.9rem 2.8rem;
+      transition: background 0.25s;
+    }
+    .mobile-nav-cta:hover { background: #2a2a2a; }
+
     /* ── ANIMATIONS ── */
     .reveal {
       opacity: 0; transform: translateY(20px);
@@ -417,6 +474,8 @@
     }
     @media (max-width: 700px) {
       .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      .mobile-menu { display: flex; }
       .services { padding: 4rem 1.5rem; }
       .services-grid { grid-template-columns: 1fr; }
       .process { padding: 4rem 1.5rem; }
@@ -448,7 +507,21 @@
     <li><a href="#testimonials">Reviews</a></li>
   </ul>
   <a href="#contact" class="nav-cta">Get a Quote</a>
+  <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+  <ul class="mobile-nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#process">Our Process</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#testimonials">Reviews</a></li>
+  </ul>
+  <a href="#contact" class="mobile-nav-cta">Get a Quote</a>
+</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -734,7 +807,7 @@
         <div class="contact-icon">✉️</div>
         <div>
           <div class="contact-label">Email</div>
-          <div class="contact-value">info@goodasnewhi.com</div>
+          <div class="contact-value"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f29b9c949db2959d9d9693819c97859a9bdc919d9f">[email&#160;protected]</a></div>
         </div>
       </div>
       <div class="contact-item">
@@ -768,7 +841,7 @@
   </ul>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   // Scroll reveal
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {
@@ -785,14 +858,32 @@
   function handleSubmit(e) {
     e.preventDefault();
     const btn = e.target.querySelector('.btn-submit');
-    btn.textContent = '✓ Request Sent!';
-    btn.style.background = '#2d6a4f';
+    btn.textContent = 'Sending…';
     setTimeout(() => {
-      btn.textContent = 'Send My Request →';
-      btn.style.background = '';
+      btn.textContent = 'Request Sent ✓';
       e.target.reset();
-    }, 3000);
+    }, 1500);
   }
+
+  // Hamburger menu
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    const isOpen = hamburger.classList.toggle('open');
+    hamburger.setAttribute('aria-expanded', isOpen);
+    mobileMenu.classList.toggle('open', isOpen);
+    mobileMenu.setAttribute('aria-hidden', !isOpen);
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  });
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', false);
+      mobileMenu.classList.remove('open');
+      mobileMenu.setAttribute('aria-hidden', true);
+      document.body.style.overflow = '';
+    });
+  });
 </script>
 </body>
 </html>
