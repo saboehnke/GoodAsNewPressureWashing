@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Good As New Home Improvement</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0a0a0a;
+      --off-white: #f5f2ec;
+      --cream: #ede9e0;
+      --accent: #c8a96e;
+      --accent-light: #e8d5a8;
+      --mid: #6b6560;
+      --light-line: rgba(0,0,0,0.08);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Barlow', sans-serif;
+      background: var(--off-white);
+      color: var(--black);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 4rem;
+      background: rgba(245,242,236,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--light-line);
+      transition: padding 0.3s;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 0.8rem; }
+    .nav-logo img { height: 38px; width: auto; }
+    .nav-brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem; font-weight: 600;
+      letter-spacing: 0.05em;
+      line-height: 1.15;
+    }
+    .nav-brand span { display: block; font-size: 0.65rem; font-family: 'Barlow Condensed', sans-serif; font-weight: 400; letter-spacing: 0.22em; text-transform: uppercase; color: var(--mid); margin-top: 1px; }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a { font-family: 'Barlow Condensed', sans-serif; font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase; text-decoration: none; color: var(--black); transition: color 0.2s; }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-cta {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.75rem; letter-spacing: 0.18em; text-transform: uppercase;
+      text-decoration: none; color: var(--black);
+      border: 1.5px solid var(--black);
+      padding: 0.5rem 1.4rem;
+      transition: background 0.25s, color 0.25s;
+    }
+    .nav-cta:hover { background: var(--black); color: var(--off-white); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid; grid-template-columns: 1fr 1fr;
+      padding-top: 72px;
+    }
+    .hero-left {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 6rem 5rem 6rem 8rem;
+      position: relative;
+    }
+    .hero-left::after {
+      content: '';
+      position: absolute; right: 0; top: 10%; bottom: 10%;
+      width: 1px; background: var(--light-line);
+    }
+    .hero-tag {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.72rem; letter-spacing: 0.28em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 1.6rem;
+      display: flex; align-items: center; gap: 0.8rem;
+    }
+    .hero-tag::before { content: ''; display: block; width: 32px; height: 1px; background: var(--accent); }
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 5vw, 5.2rem);
+      font-weight: 300; line-height: 1.05;
+      letter-spacing: -0.01em;
+      margin-bottom: 1.8rem;
+    }
+    h1 strong { font-weight: 700; display: block; }
+    .hero-desc {
+      font-size: 1rem; line-height: 1.75; color: var(--mid);
+      max-width: 380px; margin-bottom: 3rem;
+    }
+    .hero-actions { display: flex; gap: 1rem; align-items: center; }
+    .btn-primary {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase;
+      text-decoration: none; color: var(--off-white);
+      background: var(--black); padding: 0.9rem 2.2rem;
+      transition: background 0.25s, transform 0.2s;
+      display: inline-block;
+    }
+    .btn-primary:hover { background: #2a2a2a; transform: translateY(-1px); }
+    .btn-secondary {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase;
+      text-decoration: none; color: var(--black);
+      padding: 0.9rem 0;
+      border-bottom: 1.5px solid var(--black);
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .btn-secondary:hover { color: var(--accent); border-color: var(--accent); }
+
+    .hero-right {
+      background: var(--cream);
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+      padding: 4rem;
+    }
+    .hero-right::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 70% 40%, rgba(200,169,110,0.12) 0%, transparent 60%);
+    }
+    .hero-logo-wrap {
+      position: relative; z-index: 1;
+      display: flex; flex-direction: column; align-items: center; gap: 2.5rem;
+    }
+    .hero-logo-wrap img {
+      width: min(420px, 80%);
+      filter: drop-shadow(0 12px 40px rgba(0,0,0,0.08));
+      animation: floatIn 1s ease both;
+    }
+    @keyframes floatIn {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-badge {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--mid); border: 1px solid rgba(0,0,0,0.15);
+      padding: 0.5rem 1.2rem;
+      animation: floatIn 1s 0.3s ease both;
+    }
+    .hero-stat-row {
+      display: flex; gap: 3rem;
+      animation: floatIn 1s 0.5s ease both;
+    }
+    .hero-stat { text-align: center; }
+    .hero-stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem; font-weight: 600; display: block;
+    }
+    .hero-stat-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--mid);
+    }
+
+    /* ── MARQUEE ── */
+    .marquee-bar {
+      background: var(--black); color: var(--off-white);
+      padding: 0.85rem 0; overflow: hidden;
+    }
+    .marquee-track {
+      display: flex; gap: 0;
+      animation: marqueeScroll 28s linear infinite;
+      width: max-content;
+    }
+    .marquee-item {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase;
+      white-space: nowrap; padding: 0 2.5rem;
+      display: flex; align-items: center; gap: 2.5rem;
+    }
+    .marquee-item::after { content: '·'; color: var(--accent); font-size: 1.2rem; }
+    @keyframes marqueeScroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ── SERVICES ── */
+    .services { padding: 8rem 8rem 6rem; }
+    .section-header { margin-bottom: 4rem; display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; }
+    .section-tag {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.72rem; letter-spacing: 0.28em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 0.8rem;
+      display: flex; align-items: center; gap: 0.8rem;
+    }
+    .section-tag::before { content: ''; display: block; width: 24px; height: 1px; background: var(--accent); }
+    h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 3.5vw, 3.5rem);
+      font-weight: 300; line-height: 1.1;
+    }
+    h2 strong { font-weight: 700; }
+    .section-desc { font-size: 0.95rem; color: var(--mid); line-height: 1.7; max-width: 280px; text-align: right; }
+
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+    .service-card {
+      background: var(--cream); padding: 2.8rem 2.4rem;
+      position: relative; overflow: hidden;
+      cursor: default;
+      transition: background 0.3s;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+      background: var(--accent);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.35s ease;
+    }
+    .service-card:hover { background: var(--black); }
+    .service-card:hover .service-num,
+    .service-card:hover .service-title,
+    .service-card:hover .service-text { color: var(--off-white); }
+    .service-card:hover .service-icon { color: var(--accent); }
+    .service-card:hover::before { transform: scaleX(1); }
+    .service-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.85rem; color: var(--accent);
+      letter-spacing: 0.1em; margin-bottom: 1.5rem;
+      transition: color 0.3s;
+    }
+    .service-icon { font-size: 1.8rem; margin-bottom: 1.2rem; transition: color 0.3s; }
+    .service-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem; font-weight: 600;
+      margin-bottom: 0.8rem; line-height: 1.2;
+      transition: color 0.3s;
+    }
+    .service-text { font-size: 0.88rem; color: var(--mid); line-height: 1.7; transition: color 0.3s; }
+
+    /* ── PROCESS ── */
+    .process { padding: 6rem 8rem; background: var(--cream); }
+    .process-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3rem; margin-top: 4rem; position: relative; }
+    .process-steps::before {
+      content: '';
+      position: absolute; top: 2.2rem; left: 10%; right: 10%; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent), var(--accent), transparent);
+      opacity: 0.4;
+    }
+    .step { position: relative; }
+    .step-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.5rem; font-weight: 700; color: rgba(0,0,0,0.06);
+      line-height: 1; margin-bottom: 1.2rem;
+      position: relative;
+    }
+    .step-dot {
+      position: absolute; top: 1.5rem; left: 0;
+      width: 10px; height: 10px;
+      border-radius: 50%; background: var(--accent);
+      border: 2px solid var(--cream);
+      outline: 1px solid var(--accent);
+    }
+    .step-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem; font-weight: 600; margin-bottom: 0.6rem;
+    }
+    .step-text { font-size: 0.87rem; color: var(--mid); line-height: 1.7; }
+
+    /* ── WHY US ── */
+    .why { padding: 6rem 8rem; display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
+    .why-left { position: relative; }
+    .why-img-placeholder {
+      aspect-ratio: 4/5;
+      background: var(--cream);
+      position: relative; overflow: hidden;
+    }
+    .why-img-placeholder::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(200,169,110,0.15) 0%, transparent 50%);
+    }
+    .why-inner-card {
+      position: absolute; bottom: -1.5rem; right: -1.5rem;
+      background: var(--black); color: var(--off-white);
+      padding: 2rem 2.2rem;
+      width: 65%;
+    }
+    .why-inner-card .big-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.5rem; font-weight: 700; line-height: 1;
+      color: var(--accent);
+    }
+    .why-inner-card p { font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(245,242,236,0.7); margin-top: 0.4rem; }
+    .why-right { }
+    .why-items { display: flex; flex-direction: column; gap: 2rem; margin-top: 3rem; }
+    .why-item { display: flex; gap: 1.5rem; align-items: flex-start; }
+    .why-check {
+      flex-shrink: 0; width: 22px; height: 22px;
+      border: 1.5px solid var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.7rem; color: var(--accent); margin-top: 0.1rem;
+    }
+    .why-item-title { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-weight: 600; margin-bottom: 0.3rem; }
+    .why-item-text { font-size: 0.87rem; color: var(--mid); line-height: 1.7; }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials { padding: 6rem 8rem; background: var(--black); color: var(--off-white); }
+    .testimonials .section-tag { color: var(--accent); }
+    .testimonials h2 { color: var(--off-white); }
+    .testimonials .section-desc { color: rgba(245,242,236,0.5); }
+    .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 3.5rem; }
+    .testimonial-card {
+      background: rgba(255,255,255,0.04);
+      padding: 2.5rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      position: relative;
+    }
+    .testimonial-card::before {
+      content: '"';
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 5rem; line-height: 1;
+      color: var(--accent); opacity: 0.3;
+      position: absolute; top: 1.2rem; right: 2rem;
+    }
+    .testimonial-stars { color: var(--accent); font-size: 0.8rem; letter-spacing: 0.2em; margin-bottom: 1.2rem; }
+    .testimonial-text { font-size: 0.95rem; line-height: 1.75; color: rgba(245,242,236,0.8); margin-bottom: 1.8rem; font-style: italic; }
+    .testimonial-author { font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); }
+
+    /* ── CTA ── */
+    .cta-section {
+      padding: 8rem 8rem;
+      display: grid; grid-template-columns: 1.2fr 1fr; gap: 6rem; align-items: center;
+    }
+    .cta-left h2 { margin-bottom: 1.5rem; }
+    .cta-left p { font-size: 1rem; color: var(--mid); line-height: 1.75; margin-bottom: 2.5rem; max-width: 440px; }
+    .cta-form { display: flex; flex-direction: column; gap: 1rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-field {
+      display: flex; flex-direction: column; gap: 0.4rem;
+    }
+    .form-field label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--mid);
+    }
+    .form-field input,
+    .form-field select,
+    .form-field textarea {
+      font-family: 'Barlow', sans-serif;
+      font-size: 0.9rem;
+      background: var(--cream); border: 1px solid rgba(0,0,0,0.12);
+      padding: 0.75rem 1rem; color: var(--black); outline: none;
+      transition: border-color 0.2s;
+      appearance: none;
+    }
+    .form-field input:focus,
+    .form-field select:focus,
+    .form-field textarea:focus { border-color: var(--accent); }
+    .form-field textarea { resize: vertical; min-height: 100px; }
+    .btn-submit {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase;
+      background: var(--black); color: var(--off-white);
+      border: none; padding: 1rem 2.5rem;
+      cursor: pointer; align-self: flex-start;
+      transition: background 0.25s, transform 0.2s;
+    }
+    .btn-submit:hover { background: #2a2a2a; transform: translateY(-1px); }
+
+    .cta-right { }
+    .contact-info-block { display: flex; flex-direction: column; gap: 2rem; margin-top: 2rem; }
+    .contact-item { display: flex; gap: 1.2rem; align-items: flex-start; }
+    .contact-icon {
+      width: 42px; height: 42px; flex-shrink: 0;
+      background: var(--cream);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+    }
+    .contact-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--mid); margin-bottom: 0.2rem;
+    }
+    .contact-value { font-size: 0.95rem; font-weight: 500; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--black); color: rgba(245,242,236,0.5);
+      padding: 3rem 8rem;
+      display: flex; align-items: center; justify-content: space-between;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .footer-logo img { height: 32px; filter: invert(1) opacity(0.7); }
+    .footer-text { font-family: 'Barlow Condensed', sans-serif; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; }
+    .footer-links { display: flex; gap: 2rem; list-style: none; }
+    .footer-links a { font-family: 'Barlow Condensed', sans-serif; font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; color: rgba(245,242,236,0.4); transition: color 0.2s; }
+    .footer-links a:hover { color: var(--accent); }
+
+    /* ── ANIMATIONS ── */
+    .reveal {
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1100px) {
+      nav { padding: 1.2rem 2.5rem; }
+      .nav-links { gap: 1.5rem; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-left { padding: 5rem 3rem 3rem; }
+      .hero-left::after { display: none; }
+      .hero-right { min-height: 380px; padding: 3rem; }
+      .services, .process, .why, .testimonials, .cta-section, footer { padding-left: 3rem; padding-right: 3rem; }
+      .services-grid { grid-template-columns: 1fr 1fr; }
+      .why { grid-template-columns: 1fr; }
+      .why-inner-card { right: 0; }
+      .cta-section { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 700px) {
+      .nav-links, .nav-cta { display: none; }
+      .services { padding: 4rem 1.5rem; }
+      .services-grid { grid-template-columns: 1fr; }
+      .process { padding: 4rem 1.5rem; }
+      .process-steps { grid-template-columns: 1fr 1fr; }
+      .testimonials, .cta-section, footer { padding: 4rem 1.5rem; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+      .section-header { flex-direction: column; align-items: flex-start; }
+      .section-desc { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <img src="img/logo_noname.png" alt="Good As New Logo" />
+    <div class="nav-brand">
+      Good As New
+      <span>Home Improvement</span>
+    </div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#process">Our Process</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#testimonials">Reviews</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Get a Quote</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-tag">Exterior Cleaning Specialists</div>
+    <h1>
+      Restore Your<br/>
+      <strong>Home's Beauty</strong>
+    </h1>
+    <p class="hero-desc">
+      Professional pressure washing, soft washing, and exterior cleaning services that make your property look good as new — guaranteed.
+    </p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">Get a Free Quote</a>
+      <a href="#services" class="btn-secondary">View Services</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-logo-wrap">
+      <img src="img/logo.png" alt="Good As New Home Improvement" />
+      <div class="hero-badge">Licensed · Insured · Satisfaction Guaranteed</div>
+      <div class="hero-stat-row">
+        <div class="hero-stat">
+          <span class="hero-stat-num">500+</span>
+          <span class="hero-stat-label">Jobs Completed</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-num">5★</span>
+          <span class="hero-stat-label">Avg. Rating</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-num">100%</span>
+          <span class="hero-stat-label">Satisfaction</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-bar">
+  <div class="marquee-track">
+    <!-- Doubled for seamless loop -->
+    <span class="marquee-item">Pressure Washing</span>
+    <span class="marquee-item">Soft Washing</span>
+    <span class="marquee-item">Roof Cleaning</span>
+    <span class="marquee-item">Driveway Cleaning</span>
+    <span class="marquee-item">Deck & Patio Restoration</span>
+    <span class="marquee-item">House Washing</span>
+    <span class="marquee-item">Gutter Cleaning</span>
+    <span class="marquee-item">Fence Cleaning</span>
+    <span class="marquee-item">Commercial Services</span>
+    <span class="marquee-item">Pressure Washing</span>
+    <span class="marquee-item">Soft Washing</span>
+    <span class="marquee-item">Roof Cleaning</span>
+    <span class="marquee-item">Driveway Cleaning</span>
+    <span class="marquee-item">Deck & Patio Restoration</span>
+    <span class="marquee-item">House Washing</span>
+    <span class="marquee-item">Gutter Cleaning</span>
+    <span class="marquee-item">Fence Cleaning</span>
+    <span class="marquee-item">Commercial Services</span>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="section-header reveal">
+    <div>
+      <div class="section-tag">What We Do</div>
+      <h2>Our <strong>Services</strong></h2>
+    </div>
+    <p class="section-desc">From driveways to rooftops, we handle every surface with care and precision.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-num">01</div>
+      <div class="service-icon">🏠</div>
+      <div class="service-title">House Washing</div>
+      <p class="service-text">Gentle yet effective soft washing removes dirt, mold, mildew, and algae from your home's exterior without damaging surfaces.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-num">02</div>
+      <div class="service-icon">🚗</div>
+      <div class="service-title">Driveway & Concrete</div>
+      <p class="service-text">High-pressure cleaning blasts away oil stains, tire marks, and years of grime from concrete and paved surfaces.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-num">03</div>
+      <div class="service-icon">🏚️</div>
+      <div class="service-title">Roof Cleaning</div>
+      <p class="service-text">Low-pressure roof washing safely removes black streaks, moss, and lichen — extending the life of your roof.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-num">04</div>
+      <div class="service-icon">🌿</div>
+      <div class="service-title">Deck & Patio</div>
+      <p class="service-text">Restore your outdoor living spaces. We clean wood, composite, brick, and stone to their original brilliance.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-num">05</div>
+      <div class="service-icon">🍂</div>
+      <div class="service-title">Gutter Cleaning</div>
+      <p class="service-text">We clear clogged gutters and downspouts to protect your home from water damage and ensure proper drainage.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-num">06</div>
+      <div class="service-icon">🏢</div>
+      <div class="service-title">Commercial Services</div>
+      <p class="service-text">Keep storefronts, parking lots, and commercial properties clean and welcoming for customers and clients.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process" id="process">
+  <div class="section-header reveal">
+    <div>
+      <div class="section-tag">How It Works</div>
+      <h2>Simple <strong>Process</strong></h2>
+    </div>
+    <p class="section-desc">Getting your property cleaned is easy. Here's what to expect from start to finish.</p>
+  </div>
+  <div class="process-steps">
+    <div class="step reveal">
+      <div class="step-num">01<div class="step-dot"></div></div>
+      <div class="step-title">Request a Quote</div>
+      <p class="step-text">Fill out our quick form or give us a call. We'll ask a few questions about your property and needs.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">02<div class="step-dot"></div></div>
+      <div class="step-title">Free Assessment</div>
+      <p class="step-text">We provide a transparent, itemized quote with no hidden fees — so you always know exactly what you're paying for.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">03<div class="step-dot"></div></div>
+      <div class="step-title">We Get to Work</div>
+      <p class="step-text">Our team arrives on schedule, protects your landscaping and surroundings, and delivers a thorough clean.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">04<div class="step-dot"></div></div>
+      <div class="step-title">You're Impressed</div>
+      <p class="step-text">We walk through the results with you. If anything isn't right, we make it right — no questions asked.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="why" id="about">
+  <div class="why-left reveal">
+    <div class="why-img-placeholder">
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1rem;">
+        <img src="img/logo.png" alt="Good As New" style="width:60%;filter:opacity(0.5);" />
+      </div>
+    </div>
+    <div class="why-inner-card">
+      <span class="big-num">100%</span>
+      <p>Satisfaction Guaranteed<br/>on Every Job</p>
+    </div>
+  </div>
+  <div class="why-right reveal">
+    <div class="section-tag">Why Choose Us</div>
+    <h2>The <strong>Good As New</strong><br/>Difference</h2>
+    <div class="why-items">
+      <div class="why-item">
+        <div class="why-check">✓</div>
+        <div>
+          <div class="why-item-title">Licensed & Fully Insured</div>
+          <p class="why-item-text">We carry full liability insurance and are licensed to operate, so you're protected on every job.</p>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-check">✓</div>
+        <div>
+          <div class="why-item-title">Eco-Friendly Solutions</div>
+          <p class="why-item-text">Our biodegradable cleaning solutions are safe for your family, pets, and the environment.</p>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-check">✓</div>
+        <div>
+          <div class="why-item-title">No Hidden Fees</div>
+          <p class="why-item-text">Transparent pricing from the start. The quote you receive is the price you pay.</p>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-check">✓</div>
+        <div>
+          <div class="why-item-title">Locally Owned & Operated</div>
+          <p class="why-item-text">We're your neighbors. We take pride in every job because our reputation is on the line.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="testimonials">
+  <div class="section-header reveal">
+    <div>
+      <div class="section-tag">What Clients Say</div>
+      <h2>Real <strong>Results</strong></h2>
+    </div>
+    <p class="section-desc" style="color:rgba(245,242,236,0.4);">Hundreds of happy homeowners trust us with their properties.</p>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testimonial-card reveal">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">My driveway looks absolutely brand new. I couldn't believe the difference — years of staining gone in just a few hours. Extremely professional crew.</p>
+      <div class="testimonial-author">— Michael T., Homeowner</div>
+    </div>
+    <div class="testimonial-card reveal">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">They showed up on time, explained everything they were going to do, and left my deck looking stunning. Will be using them every year without question.</p>
+      <div class="testimonial-author">— Sandra R., Homeowner</div>
+    </div>
+    <div class="testimonial-card reveal">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">Best money I've spent on home maintenance. The roof looks ten years younger and they were careful around all my landscaping. Highly recommend!</p>
+      <div class="testimonial-author">— James K., Property Owner</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA / CONTACT -->
+<section class="cta-section" id="contact">
+  <div class="cta-left reveal">
+    <div class="section-tag">Get Started</div>
+    <h2>Request a <strong>Free Quote</strong></h2>
+    <p>Tell us about your property and we'll get back to you within 24 hours with a detailed, no-obligation estimate.</p>
+    <form class="cta-form" onsubmit="handleSubmit(event)">
+      <div class="form-row">
+        <div class="form-field">
+          <label>First Name</label>
+          <input type="text" placeholder="John" />
+        </div>
+        <div class="form-field">
+          <label>Last Name</label>
+          <input type="text" placeholder="Smith" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-field">
+          <label>Phone</label>
+          <input type="tel" placeholder="(555) 000-0000" />
+        </div>
+        <div class="form-field">
+          <label>Email</label>
+          <input type="email" placeholder="john@email.com" />
+        </div>
+      </div>
+      <div class="form-field">
+        <label>Service Needed</label>
+        <select>
+          <option value="">Select a service...</option>
+          <option>House Washing</option>
+          <option>Driveway & Concrete Cleaning</option>
+          <option>Roof Cleaning</option>
+          <option>Deck & Patio Cleaning</option>
+          <option>Gutter Cleaning</option>
+          <option>Commercial Services</option>
+          <option>Multiple Services</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label>Additional Details</label>
+        <textarea placeholder="Tell us about your property, square footage, any specific concerns..."></textarea>
+      </div>
+      <button type="submit" class="btn-submit">Send My Request →</button>
+    </form>
+  </div>
+  <div class="cta-right reveal">
+    <div class="section-tag">Contact Info</div>
+    <h2>Let's <strong>Talk</strong></h2>
+    <div class="contact-info-block">
+      <div class="contact-item">
+        <div class="contact-icon">📞</div>
+        <div>
+          <div class="contact-label">Phone</div>
+          <div class="contact-value">(555) 123-4567</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">✉️</div>
+        <div>
+          <div class="contact-label">Email</div>
+          <div class="contact-value">info@goodasnewhi.com</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">🕐</div>
+        <div>
+          <div class="contact-label">Hours</div>
+          <div class="contact-value">Mon–Sat: 7am – 6pm</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📍</div>
+        <div>
+          <div class="contact-label">Service Area</div>
+          <div class="contact-value">Local & Surrounding Areas</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <img src="img/logo.png" alt="Good As New" />
+  </div>
+  <p class="footer-text">© 2026 Good As New Home Improvement. All rights reserved.</p>
+  <ul class="footer-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Form submit
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('.btn-submit');
+    btn.textContent = '✓ Request Sent!';
+    btn.style.background = '#2d6a4f';
+    setTimeout(() => {
+      btn.textContent = 'Send My Request →';
+      btn.style.background = '';
+      e.target.reset();
+    }, 3000);
+  }
+</script>
+</body>
+</html>
