@@ -451,6 +451,81 @@
     }
     .mobile-nav-cta:hover { background: #2a2a2a; }
 
+    /* ── GALLERY ── */
+    .gallery {
+      background: #111;
+      padding: 5rem 0;
+    }
+    .gallery-header {
+      padding: 0 8rem 3rem;
+      display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem;
+    }
+    .gallery-hint {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(245,242,236,0.35);
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .gallery-hint::before {
+      content: '';
+      display: inline-block; width: 20px; height: 1px;
+      background: rgba(245,242,236,0.25);
+    }
+    .gallery-scroll-wrap {
+      overflow-x: auto;
+      overflow-y: hidden;
+      cursor: grab;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding: 0 8rem;
+    }
+    .gallery-scroll-wrap::-webkit-scrollbar { display: none; }
+    .gallery-scroll-wrap.grabbing { cursor: grabbing; }
+    .gallery-track {
+      display: flex;
+      gap: 1.5rem;
+      width: max-content;
+      padding-bottom: 0.5rem;
+    }
+    .gallery-item {
+      flex-shrink: 0;
+      width: 520px;
+      height: 360px;
+      overflow: hidden;
+      position: relative;
+    }
+    .gallery-item img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+      pointer-events: none;
+      user-select: none;
+    }
+    .gallery-item:hover img { transform: scale(1.04); }
+    .gallery-item .gallery-caption {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 1rem 1.4rem;
+      background: linear-gradient(transparent, rgba(0,0,0,0.55));
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .gallery-item:hover .gallery-caption { opacity: 1; }
+
+    @media (max-width: 1100px) {
+      .gallery-header { padding: 0 3rem 2.5rem; }
+      .gallery-scroll-wrap { padding: 0 3rem; }
+      .gallery-item { width: 380px; height: 280px; }
+    }
+    @media (max-width: 700px) {
+      .gallery-header { padding: 0 1.5rem 2rem; }
+      .gallery-scroll-wrap { padding: 0 1.5rem; }
+      .gallery-item { width: 280px; height: 210px; }
+      .gallery-track { gap: 1rem; }
+    }
+
     /* ── ANIMATIONS ── */
     .reveal {
       opacity: 0; transform: translateY(20px);
@@ -585,6 +660,45 @@
     <span class="marquee-item">Commercial Services</span>
   </div>
 </div>
+
+<!-- GALLERY -->
+<section class="gallery" id="gallery">
+  <div class="gallery-header reveal">
+    <div>
+      <div class="section-tag" style="color:var(--accent);">Our Work</div>
+      <h2 style="color:var(--off-white);">Before &amp; <strong>After</strong></h2>
+    </div>
+    <div class="gallery-hint">Scroll to explore →</div>
+  </div>
+  <div class="gallery-scroll-wrap" id="galleryScroll">
+    <div class="gallery-track">
+      <!-- ↓↓↓ ADD MORE IMAGES HERE — copy a .gallery-item block for each new photo ↓↓↓ -->
+      <div class="gallery-item">
+        <img src="img/img1.jpg" alt="Good As New Power Washing" draggable="false" />
+        <div class="gallery-caption">Good As New Power Washing</div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/img2.jpg" alt="Driveway cleaning - before & after" draggable="false" />
+        <div class="gallery-caption">Driveway Cleaning</div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/img3.jpg" alt="Sidewalk cleaning - before & after" draggable="false" />
+        <div class="gallery-caption">Sidewalk Cleaning</div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/img4.jpg" alt="Tank cleaning - before & after" draggable="false" />
+        <div class="gallery-caption">Tank Cleaning</div>
+      </div>
+      <!-- Example of next item:
+      <div class="gallery-item">
+        <img src="img/gallery/house1.jpg" alt="House washing" draggable="false" />
+        <div class="gallery-caption">House Washing</div>
+      </div>
+      -->
+      <!-- ↑↑↑ END OF GALLERY ITEMS ↑↑↑ -->
+    </div>
+  </div>
+</section>
 
 <!-- SERVICES -->
 <section class="services" id="services">
@@ -884,6 +998,24 @@
       document.body.style.overflow = '';
     });
   });
+  // Gallery drag-to-scroll
+  const galleryScroll = document.getElementById('galleryScroll');
+  if (galleryScroll) {
+    let isDown = false, startX, scrollLeft;
+    galleryScroll.addEventListener('mousedown', e => {
+      isDown = true; galleryScroll.classList.add('grabbing');
+      startX = e.pageX - galleryScroll.offsetLeft;
+      scrollLeft = galleryScroll.scrollLeft;
+    });
+    galleryScroll.addEventListener('mouseleave', () => { isDown = false; galleryScroll.classList.remove('grabbing'); });
+    galleryScroll.addEventListener('mouseup', () => { isDown = false; galleryScroll.classList.remove('grabbing'); });
+    galleryScroll.addEventListener('mousemove', e => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - galleryScroll.offsetLeft;
+      galleryScroll.scrollLeft = scrollLeft - (x - startX) * 1.5;
+    });
+  }
 </script>
 </body>
 </html>
